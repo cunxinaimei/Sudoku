@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="dark">#bbbbbb</color>
+    <color name="dark2">#999999</color>
+    <color name="text_dark">#333333</color>
+    <color name="light">#dddddd</color>
+    <color name="light2">#bbbbbb</color>
+    <!--<color name="text_light">#bbbbbb</color>-->
+    <color name="text_light">#333333</color>
+    <color name="highlight">#448822</color>
+    <color name="operator">#cccccc</color>
+    <color name="text_operator">#333333</color>
+    <color name="text_editable">#4466aa</color>
+    <color name="text_highlight">#dddddd</color>
+    <color name="text_normal">#bbbbbb</color>
+</resources>
+
