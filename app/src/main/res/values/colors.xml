@@ -4,7 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="warning">#bb4422</color>
     <color name="dark">#bbbbbb</color>
+    <color name="effected">#888888</color>
     <color name="dark2">#999999</color>
     <color name="text_dark">#333333</color>
     <color name="light">#dddddd</color>

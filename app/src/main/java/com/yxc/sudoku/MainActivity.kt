@@ -140,37 +140,71 @@ class MainActivity : AutoLayoutActivity() {
                 tv.setBackgroundResource(R.drawable.bg_focus)
                 continue
             }
-            if (!TextUtils.isEmpty(tv.text) && tv.text.toString().equals(value)) {
-                tv.setTextColor(resources.getColor(R.color.text_highlight))
-                tv.setBackgroundColor(resources.getColor(R.color.highlight))
-            } else {
-                val tag: String = tv.tag as String
-                val row = tag.substring(0, 1).toInt()
-                val col = tag.substring(1, 2).toInt()
-                if ((row < 3 && col < 3) || (row < 3 && col > 5) || (row in 3..5 && col in 3..5) || (row > 5 && col < 3) || (row > 5 && col > 5)) {
-//                    if (!TextUtils.isEmpty(tv.text)) {
-                        tv.setBackgroundColor(resources.getColor(R.color.dark))
-//                    } else {
-//                        tv.setBackgroundColor(resources.getColor(R.color.dark2))
-//                    }
-                    if (emptyViews.contains(tv.tag.toString())){
-                        tv.setTextColor(resources.getColor(R.color.text_editable))
-                    }else {
-                        tv.setTextColor(resources.getColor(R.color.text_light))
-                    }
+            if (checkEffected(tv)) {
+                if (!TextUtils.isEmpty(focusedTextView?.text.toString()) && tv.text.toString().equals(focusedTextView?.text.toString())) {
+                    tv.setBackgroundColor(resources.getColor(R.color.warning))
                 } else {
-//                    if (!TextUtils.isEmpty(tv.text)) {
+                    tv.setBackgroundColor(resources.getColor(R.color.effected))
+                }
+                if (emptyViews.contains(tv.tag.toString())) {
+                    tv.setTextColor(resources.getColor(R.color.text_editable))
+                } else {
+                    tv.setTextColor(resources.getColor(R.color.text_light))
+                }
+            } else {
+                if (!TextUtils.isEmpty(tv.text) && tv.text.toString().equals(value)) {
+                    tv.setTextColor(resources.getColor(R.color.text_highlight))
+                    tv.setBackgroundColor(resources.getColor(R.color.highlight))
+                } else {
+                    val tag: String = tv.tag as String
+                    val row = tag.substring(0, 1).toInt()
+                    val col = tag.substring(1, 2).toInt()
+                    if ((row < 3 && col < 3) || (row < 3 && col > 5) || (row in 3..5 && col in 3..5) || (row > 5 && col < 3) || (row > 5 && col > 5)) {
+                        tv.setBackgroundColor(resources.getColor(R.color.dark))
+                        if (emptyViews.contains(tv.tag.toString())) {
+                            tv.setTextColor(resources.getColor(R.color.text_editable))
+                        } else {
+                            tv.setTextColor(resources.getColor(R.color.text_light))
+                        }
+                    } else {
                         tv.setBackgroundColor(resources.getColor(R.color.light))
-//                    } else {
-//                        tv.setBackgroundColor(resources.getColor(R.color.light2))
-//                    }
-                    if (emptyViews.contains(tv.tag.toString())){
-                        tv.setTextColor(resources.getColor(R.color.text_editable))
-                    }else {
-                        tv.setTextColor(resources.getColor(R.color.text_dark))
+                        if (emptyViews.contains(tv.tag.toString())) {
+                            tv.setTextColor(resources.getColor(R.color.text_editable))
+                        } else {
+                            tv.setTextColor(resources.getColor(R.color.text_dark))
+                        }
                     }
                 }
             }
+        }
+    }
+
+    fun checkEffected(view: TextView): Boolean {
+        if (focusedTextView == null) return false
+        val tag: String = view.tag as String
+        val row = tag.substring(0, 1).toInt()
+        val col = tag.substring(1, 2).toInt()
+        val focusedTag: String = focusedTextView?.tag as String
+        val focusedRow = focusedTag.substring(0, 1).toInt()
+        val focusedCol = focusedTag.substring(1, 2).toInt()
+        if (row == focusedRow || col == focusedCol || getAreaIndex(row, col) == getAreaIndex(focusedRow, focusedCol)) {
+            return true
+        }
+        return false
+    }
+
+    fun getAreaIndex(row: Int, col: Int): Int {
+        return when {
+            row in 0..2 && col in 0..2 -> 0
+            row in 0..2 && col in 3..5 -> 1
+            row in 0..2 && col in 6..8 -> 2
+            row in 3..5 && col in 0..2 -> 3
+            row in 3..5 && col in 3..5 -> 4
+            row in 3..5 && col in 6..8 -> 5
+            row in 6..8 && col in 0..2 -> 6
+            row in 6..8 && col in 3..5 -> 7
+            row in 6..8 && col in 6..8 -> 8
+            else -> -1
         }
     }
 
